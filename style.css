@@ -515,20 +515,20 @@ span{
 .contact-container {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 4rem;
+    padding: 2rem;
 }
 
 .contact-info {
-    flex: 1 1 30rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    max-width: 800px;
+    width: 100%;
 }
 
 .info-item {
     background: rgba(255, 255, 255, 0.05);
-    padding: 2rem;
+    padding: 3rem;
     border-radius: 1rem;
     border: .1rem solid #b74b4b;
     display: flex;
@@ -540,35 +540,38 @@ span{
 
 .info-item:hover {
     background: rgba(183, 75, 75, 0.1);
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(183, 75, 75, 0.3);
 }
 
 .info-item i {
-    font-size: 3rem;
+    font-size: 4rem;
     color: #b74b4b;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .info-item h3 {
-    font-size: 2rem;
-    margin-bottom: .5rem;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
 }
 
 .info-item p {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+    color: #aaa;
 }
 
-.contact-form {
-    flex: 1 1 40rem;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 3rem;
-    border-radius: 2rem;
-    border: .2rem solid #b74b4b;
+/* Responsive design */
+@media (max-width: 768px) {
+    .contact-info {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
 }
 
+/* Remove old contact form styles */
+.contact-form,
 .input-box {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 2rem;
+    display: none;
 }
 
 .input-box input, .contact-form textarea {
