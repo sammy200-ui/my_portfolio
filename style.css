@@ -254,19 +254,22 @@ span{
 }
 
 @keyframes words{
-    0%, 20%{
-        content: "Web Developer";
+    0%, 16%{
+        content: "Full Stack Developer";
     }
-    21%, 40%{
-        content: "HTML/CSS/JS Expert";
+    17%, 33%{
+        content: "React Native Developer";
     }
-    41%, 60%{
+    34%, 50%{
+        content: "Node.js Developer";
+    }
+    51%, 67%{
         content: "Python Programmer";
     }
-    61%, 80%{
-        content: "React Developer";
+    68%, 84%{
+        content: "Database Designer";
     }
-    81%, 100%{
+    85%, 100%{
         content: "Problem Solver";
     }
 }
@@ -388,6 +391,9 @@ span{
     color: #b74b4b;
     margin-bottom: 1.5rem;
     transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .skill-card:hover .skill-icon {
@@ -451,6 +457,8 @@ span{
 .skill-card:nth-child(3) { animation-delay: 0.3s; }
 .skill-card:nth-child(4) { animation-delay: 0.4s; }
 .skill-card:nth-child(5) { animation-delay: 0.5s; }
+.skill-card:nth-child(6) { animation-delay: 0.6s; }
+.skill-card:nth-child(7) { animation-delay: 0.7s; }
 
 /* Remove the old progress bar styles that are no longer needed */
 .skills .skill-item,
