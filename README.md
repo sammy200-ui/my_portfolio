@@ -28,9 +28,7 @@ This portfolio website is designed to provide a detailed overview of my professi
 
 ## 🛠️ Tech Stack
 
-- **React JS**
-- **Tailwind CSS**
+- **HTML**
+- **CSS**
 - **JavaScript**
-- **Python** (For animations)
-
 ---
