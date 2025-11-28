@@ -7,8 +7,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Sameer Pawar - Portfolio</title>
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Vanilla Tilt for 3D Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 </head>
 <body>
+    <canvas id="particles"></canvas>
     <header>
         <a href="#" class="logo">Sameer</a>
 
@@ -18,9 +24,9 @@
 
         <nav>
             <a href="#home" class="active">Home</a>
-            <a href="#education">Education</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
+            <a href="#education">Education</a>
             <a href="#activities">Activities</a>
             <a href="#contact">Contact</a>
         </nav>
@@ -41,29 +47,7 @@
         </div>
     </section>
 
-    <section class="education" id="education">
-        <h2 class="heading">My <span>Education</span></h2>
-        <div class="education-container">
-            <div class="education-box">
-                <div class="education-year">2024 - 2028</div>
-                <h3>B.Tech Computer Science (AI & ML)</h3>
-                <h4>Newton School of Technology</h4>
-                <p>Currently Pursuing</p>
-            </div>
-            <div class="education-box">
-                <div class="education-year">2023 - 2024</div>
-                <h3>Intermediate (Class XII)</h3>
-                <h4>T.R High School</h4>
-                <p>Grade: <span>85.5%</span></p>
-            </div>
-            <div class="education-box">
-                <div class="education-year">2022 - 2023</div>
-                <h3>Matriculation (Class X)</h3>
-                <h4>Rajiv Gandhi International School</h4>
-                <p>Grade: <span>73.33%</span></p>
-            </div>
-        </div>
-    </section>
+
 
     <section class="skills" id="skills">
         <h2 class="heading">My <span>Skills</span></h2>
@@ -239,6 +223,30 @@
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="education" id="education">
+        <h2 class="heading">My <span>Education</span></h2>
+        <div class="education-container">
+            <div class="education-box">
+                <div class="education-year">2024 - 2028</div>
+                <h3>B.Tech Computer Science (AI & ML)</h3>
+                <h4>Newton School of Technology</h4>
+                <p>Currently Pursuing</p>
+            </div>
+            <div class="education-box">
+                <div class="education-year">2023 - 2024</div>
+                <h3>Intermediate (Class XII)</h3>
+                <h4>T.R High School</h4>
+                <p>Grade: <span>85.5%</span></p>
+            </div>
+            <div class="education-box">
+                <div class="education-year">2022 - 2023</div>
+                <h3>Matriculation (Class X)</h3>
+                <h4>Rajiv Gandhi International School</h4>
+                <p>Grade: <span>73.33%</span></p>
             </div>
         </div>
     </section>

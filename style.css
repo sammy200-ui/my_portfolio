@@ -23,6 +23,16 @@ body{
     color: white;
 }
 
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
 header{
     margin-top: 20px;
     position: fixed;
@@ -107,11 +117,7 @@ section{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
-    background-image: url('background1.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: transparent;
     position: relative;
 }
 
@@ -124,12 +130,16 @@ section{
     height: 100%;
     background: linear-gradient(
         to right,
-        rgba(0, 0, 0, 0.95) 0%,
-        rgba(0, 0, 0, 0.6) 50%,
-        rgba(0, 0, 0, 0.95) 100%
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.8) 100%
     );
     z-index: 1;
-    box-shadow: inset 0 0 50px 30px rgba(0, 0, 0, 0.9);
+}
+
+.stop-blinking::after {
+    animation: none !important;
+    opacity: 1 !important;
 }
 
 .home-content {
@@ -231,46 +241,27 @@ span{
 }
 
 .typing-text span::before{
-    content: "software Developer";
+    content: "";
     color: #b74b4b;
-    animation: words 20s infinite;
 }
 
 .typing-text span::after{
     content: "";
     background-color: black;
     position: absolute;
-    width: calc(100% + 8px);
+    width: 2px;
     height: 100%;
-    border-left: 3px solid black;
-    right: -8;
+    background-color: #b74b4b;
+    right: -5px;
     animation: cursor 0.6s infinite;
 }
 
 @keyframes cursor{
-    to{
-        border-left: 3px solid #b74b4b;
+    0%, 100%{
+        opacity: 1;
     }
-}
-
-@keyframes words{
-    0%, 16%{
-        content: "Full Stack Developer";
-    }
-    17%, 33%{
-        content: "React Native Developer";
-    }
-    34%, 50%{
-        content: "Node.js Developer";
-    }
-    51%, 67%{
-        content: "Python Programmer";
-    }
-    68%, 84%{
-        content: "Database Designer";
-    }
-    85%, 100%{
-        content: "Problem Solver";
+    50%{
+        opacity: 0;
     }
 }
 
