@@ -1,6 +1,6 @@
-# Portfolio 2025
+# Portfolio 
 
-A modern, minimalistic developer portfolio built with performance and aesthetics in mind. Featuring a warm color palette, smooth GSAP animations, and a responsive bento-grid layout.
+Personal Portfolio built with Next.js.
 
 ## Tech Stack
 
