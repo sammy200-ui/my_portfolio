@@ -1,34 +1,48 @@
-# 🌐 My Portfolio Website
+# Portfolio 2025
 
-Welcome to my **Personal Portfolio Website** built using **HTML/CSS** and **JS**. This website is a showcase of my skills, projects, and achievements as a developer and learner.
+A modern, minimalistic developer portfolio built with performance and aesthetics in mind. Featuring a warm color palette, smooth GSAP animations, and a responsive bento-grid layout.
 
-## 🚀 Live Demo
+## Tech Stack
 
-[Click here to view my portfolio](https://your-portfolio-link.com)
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [GSAP](https://gsap.com/) (GreenSock)
+- **Icons**: [Lucide React](https://lucide.dev/), [React Icons](https://react-icons.github.io/react-icons/)
+- **Deployment**: [Vercel](https://vercel.com/) (Recommended)
 
----
+## Getting Started
 
-## 📄 About
+First, install the dependencies:
 
-This portfolio website is designed to provide a detailed overview of my professional and academic journey. It includes information about me, my skills, projects, achievements, and ways to contact me.
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
 
----
+Then, run the development server:
 
-## ✨ Features
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
 
-- Responsive & Clean Design  
-- Smooth Animations  
-- Projects Showcase with Live Demo Links  
-- Skills & Technologies Section  
-- Education Section  
-- Co-curricular Achievements & Positions of Responsibility  
-- Contact Form  
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
----
+## Building for Production
 
-## 🛠️ Tech Stack
+To create an optimized production build:
 
-- **HTML**
-- **CSS**
-- **JavaScript**
----
+```bash
+npm run build
+```
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
