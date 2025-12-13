@@ -9,7 +9,7 @@ Personal Portfolio built with Next.js.
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Animations**: [GSAP](https://gsap.com/) (GreenSock)
 - **Icons**: [Lucide React](https://lucide.dev/), [React Icons](https://react-icons.github.io/react-icons/)
-- **Deployment**: [Vercel](https://vercel.com/) (Recommended)
+- **Deployment**: [Vercel](https://vercel.com/) 
 
 ## Getting Started
 
