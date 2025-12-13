@@ -135,7 +135,7 @@ export default function HeroSpotlight() {
 
         <div className="hero-content">
           <a
-            href="#projects"
+            href="#skills"
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-accent-primary transition-colors duration-300"
           >
             <span className="uppercase tracking-widest">Scroll Down</span>
