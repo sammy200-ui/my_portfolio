@@ -13,7 +13,7 @@ export default function HeroSpotlight() {
   const nameRef = useRef<HTMLHeadingElement>(null);
   const cursorRef = useRef<HTMLSpanElement>(null);
 
-  const roles = ["MERN Stack Developer", "GSoC '25 Contributor", "AI/ML Enthusiast", "Open Source Developer"];
+  const roles = ["MERN Stack Developer", "GSoC '26 Contributor", "AI/ML Enthusiast", "Open Source Developer"];
 
   // Typing effect
   useEffect(() => {

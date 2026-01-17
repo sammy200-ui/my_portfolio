@@ -18,7 +18,7 @@ interface Project {
 const projects: Project[] = [
   {
     title: "SiliconSage",
-    description: "A hybrid AI-powered PC building assistant combining Next.js and FastAPI to provide real-time performance analytics, bottleneck detection, and intelligent part recommendations. Features an interactive builder, ML-driven FPS predictions, and a dedicated AI advisor.",
+    description: "Hybrid AI PC builder with real-time analytics and performance predictions.",
     tags: ["Next.js", "FastAPI", "Python", "ML"],
     github: "https://github.com/sammy200-ui/SiliconSage",
     live: "#",
@@ -27,7 +27,7 @@ const projects: Project[] = [
   },
   {
     title: "Gaming News",
-    description: "A comprehensive gaming hub delivering curated news, in-depth reviews, and real-time esports coverage. Features live game statistics, community discussion forums, and an upcoming release calendar.",
+    description: "Global gaming hub with live stats, reviews, and community forums.",
     tags: ["HTML", "CSS", "Python"],
     github: "https://github.com/mrgear111/Gaming-News",
     live: "https://gaming-news-nine.vercel.app/",
@@ -36,7 +36,7 @@ const projects: Project[] = [
   },
   {
     title: "NextOnList",
-    description: "A modern entertainment discovery platform built with React and Vite, allowing users to explore a vast library of movies, TV shows, and anime. Features an intuitive interface for seamless browsing.",
+    description: "Modern discovery platform for movies, TV shows, and anime.",
     tags: ["React", "Vite", "APIs"],
     github: "https://github.com/sammy200-ui/NextOnList",
     live: "https://next-on-list.vercel.app/",
@@ -44,31 +44,31 @@ const projects: Project[] = [
     gradient: "from-accent-secondary/20 to-accent-tertiary/20",
   },
   {
-    title: "GlobeGuard",
-    description: "A map-based scam awareness platform designed to protect travelers and digital citizens through community-driven reporting. Users can visualize fraud hotspots, share alerts, and stay informed about local safety risks.",
-    tags: ["React Native", "Firebase"],
-    github: "https://github.com/sammy200-ui/GlobeGuard-application",
-    live: "#",
+    title: "Let's Collab",
+    description: "Real-time collaborative whiteboard for teams and designers.",
+    tags: ["Next.js", "Socket.IO", "Excalidraw", "MySQL"],
+    github: "https://github.com/IronwallxR5/Let-s_Collab",
+    live: "https://let-s-collab.vercel.app/",
     size: "wide",
     gradient: "from-accent-tertiary/20 to-accent-primary/20",
   },
   {
-    title: "Let's Collab",
-    description: "A real-time collaborative whiteboard platform empowering teams to brainstorm and design together instantly. Supports live drawing, sticky notes, and media synchronization.",
-    tags: ["Next.js", "Socket.IO", "Excalidraw", "MySQL"],
-    github: "https://github.com/IronwallxR5/Let-s_Collab",
-    live: "https://let-s-collab.vercel.app/",
-    size: "small",
-    gradient: "from-accent-tertiary/20 to-accent-primary/20",
-  },
-  {
     title: "NotesApp",
-    description: "A secure and featured-packed note-taking application built on the MERN stack with robust JWT authentication. Emphasizes data privacy and seamless user experience with full CRUD capabilities.",
+    description: "Secure MERN stack note-taking with JWT authentication.",
     tags: ["MongoDB", "Express", "React", "Node.js"],
     github: "https://github.com/sammy200-ui/NotesApp",
     live: "https://notes-app-two-taupe.vercel.app/",
     size: "wide",
     gradient: "from-accent-primary/20 to-accent-secondary/20",
+  },
+  {
+    title: "GlobeGuard",
+    description: "Community-driven scam reporting map for traveler safety.",
+    tags: ["React Native", "Firebase"],
+    github: "https://github.com/sammy200-ui/GlobeGuard-application",
+    live: "#",
+    size: "small",
+    gradient: "from-accent-tertiary/20 to-accent-primary/20",
   },
 ];
 
@@ -95,8 +95,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    // Rotate calculation
-    const rotateX = ((y - centerY) / centerY) * -3; // Subtle tilt
+    const rotateX = ((y - centerY) / centerY) * -3;
     const rotateY = ((x - centerX) / centerX) * 3;
 
     gsap.to(card, {
@@ -114,7 +113,6 @@ const ProjectCard = ({ project }: { project: Project }) => {
       duration: 0.5,
       ease: "power2.out"
     });
-    // Reset scale
     gsap.to(contentRef.current, {
       scale: 1,
       duration: 0.3
