@@ -21,7 +21,7 @@ const journeyData: JourneyItem[] = [
         year: "2025",
         title: "Google Summer of Code (GSoC)",
         subtitle: "AsyncAPI Initiative",
-        description: "Selected as a contributor for GSoC 2025 with AsyncAPI. Working on open-source tooling and enhancing the event-driven architecture ecosystem.",
+        description: "Contributing for GSoC 2026 with AsyncAPI. Working on open-source tooling and enhancing the event-driven architecture ecosystem.",
         icon: Code,
     },
     {

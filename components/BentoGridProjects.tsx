@@ -17,49 +17,58 @@ interface Project {
 
 const projects: Project[] = [
   {
+    title: "SiliconSage",
+    description: "A hybrid AI-powered PC building assistant combining Next.js and FastAPI to provide real-time performance analytics, bottleneck detection, and intelligent part recommendations. Features an interactive builder, ML-driven FPS predictions, and a dedicated AI advisor.",
+    tags: ["Next.js", "FastAPI", "Python", "ML"],
+    github: "https://github.com/sammy200-ui/SiliconSage",
+    live: "#",
+    size: "wide",
+    gradient: "from-accent-primary/20 to-accent-tertiary/20",
+  },
+  {
     title: "Gaming News",
-    description: "Real-time gaming news platform with global trends and events tracking",
+    description: "A comprehensive gaming hub delivering curated news, in-depth reviews, and real-time esports coverage. Features live game statistics, community discussion forums, and an upcoming release calendar.",
     tags: ["HTML", "CSS", "Python"],
     github: "https://github.com/mrgear111/Gaming-News",
     live: "https://gaming-news-nine.vercel.app/",
-    size: "wide",
+    size: "small",
     gradient: "from-accent-primary/20 to-accent-secondary/20",
   },
   {
     title: "NextOnList",
-    description: "Discover movies, TV shows, and anime with an intuitive interface",
+    description: "A modern entertainment discovery platform built with React and Vite, allowing users to explore a vast library of movies, TV shows, and anime. Features an intuitive interface for seamless browsing.",
     tags: ["React", "Vite", "APIs"],
     github: "https://github.com/sammy200-ui/NextOnList",
     live: "https://next-on-list.vercel.app/",
-    size: "tall",
+    size: "small",
     gradient: "from-accent-secondary/20 to-accent-tertiary/20",
   },
   {
     title: "GlobeGuard",
-    description: "Mobile app for discovering, reporting, and tracking scams worldwide",
+    description: "A map-based scam awareness platform designed to protect travelers and digital citizens through community-driven reporting. Users can visualize fraud hotspots, share alerts, and stay informed about local safety risks.",
     tags: ["React Native", "Firebase"],
     github: "https://github.com/sammy200-ui/GlobeGuard-application",
     live: "#",
-    size: "tall", // Changed from large to tall to save vertical space
+    size: "wide",
     gradient: "from-accent-tertiary/20 to-accent-primary/20",
   },
   {
     title: "Let's Collab",
-    description: "Real-time collaborative whiteboard with live drawing, sticky notes, and instant sync.",
+    description: "A real-time collaborative whiteboard platform empowering teams to brainstorm and design together instantly. Supports live drawing, sticky notes, and media synchronization.",
     tags: ["Next.js", "Socket.IO", "Excalidraw", "MySQL"],
     github: "https://github.com/IronwallxR5/Let-s_Collab",
     live: "https://let-s-collab.vercel.app/",
-    size: "small", // Mapped from className: "md:col-span-1"
-    gradient: "from-accent-tertiary/20 to-accent-primary/20", // Mapped from color
+    size: "small",
+    gradient: "from-accent-tertiary/20 to-accent-primary/20",
   },
   {
     title: "NotesApp",
-    description: "Secure note-taking application using the MERN stack with JWT authentication.",
+    description: "A secure and featured-packed note-taking application built on the MERN stack with robust JWT authentication. Emphasizes data privacy and seamless user experience with full CRUD capabilities.",
     tags: ["MongoDB", "Express", "React", "Node.js"],
     github: "https://github.com/sammy200-ui/NotesApp",
     live: "https://notes-app-two-taupe.vercel.app/",
-    size: "wide", // Mapped from className: "md:col-span-2"
-    gradient: "from-accent-primary/20 to-accent-secondary/20", // Mapped from color
+    size: "wide",
+    gradient: "from-accent-primary/20 to-accent-secondary/20",
   },
 ];
 
