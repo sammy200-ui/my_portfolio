@@ -15,7 +15,7 @@ export default function HeroSpotlight() {
 
   const roles = ["MERN Stack Developer", "GSoC '26 Contributor", "AI/ML Enthusiast", "Open Source Developer"];
 
-  // Typing effect
+ 
   useEffect(() => {
     const currentRole = roles[roleIndex];
     const timeout = setTimeout(
@@ -41,27 +41,27 @@ export default function HeroSpotlight() {
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    // Initial fade in
+   
     tl.fromTo(".hero-content",
       { opacity: 0, y: 50 },
       { opacity: 1, y: 0, duration: 1, stagger: 0.2 }
     );
 
-    // Name animation
+
     tl.fromTo(".letter",
       { y: 100, opacity: 0 },
       { y: 0, opacity: 1, duration: 1, stagger: 0.05, ease: "back.out(1.7)" },
       "-=0.5"
     );
 
-    // Social icons
+   
     tl.fromTo(".social-icon",
       { scale: 0, opacity: 0 },
       { scale: 1, opacity: 1, duration: 0.5, stagger: 0.1, ease: "back.out(1.7)" },
       "-=0.5"
     );
 
-    // Cursor blink
+   
     gsap.to(cursorRef.current, {
       opacity: 0,
       repeat: -1,

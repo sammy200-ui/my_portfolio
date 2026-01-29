@@ -15,7 +15,7 @@ import { FaBrain, FaDatabase, FaLock } from "react-icons/fa";
 gsap.registerPlugin(ScrollTrigger);
 
 const skills = [
-  // Frontend Core
+  
   { name: "HTML/CSS", icon: SiHtml5, category: "Frontend" },
   { name: "JavaScript", icon: SiJavascript, category: "Frontend" },
   { name: "TypeScript", icon: SiTypescript, category: "Frontend" },
@@ -24,7 +24,7 @@ const skills = [
   { name: "React Native", icon: SiReact, category: "Frontend" },
   { name: "Three.js", icon: SiThreedotjs, category: "Frontend" },
 
-  // Backend
+  
   { name: "Node.js", icon: SiNodedotjs, category: "Backend" },
   { name: "Express.js", icon: SiExpress, category: "Backend" },
   { name: "Python", icon: SiPython, category: "Backend" },
