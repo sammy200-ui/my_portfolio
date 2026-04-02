@@ -407,7 +407,7 @@ export default function HermetoProposal() {
                 </p>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/proposal/Screenshot 2026-04-02 at 11.06.53 PM.png"
+                  src="/proposal/uv-lock-snippet.png"
                   alt="uv.lock code snippet"
                   className="rounded-lg border border-white/[0.06] w-full max-w-xl"
                 />
@@ -499,7 +499,7 @@ export default function HermetoProposal() {
                 </p>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/proposal/Screenshot 2026-04-02 at 11.07.13 PM.png"
+                  src="/proposal/purl-output.png"
                   alt="PURL output example"
                   className="rounded-lg border border-white/[0.06] w-full max-w-xl"
                 />
