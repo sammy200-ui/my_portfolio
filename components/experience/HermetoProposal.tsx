@@ -51,13 +51,13 @@ const PRRow = ({
   url,
   description,
   category,
-  merged,
+  status = "merged",
 }: {
   id: string;
   url: string;
   description: string;
   category?: string;
-  merged: boolean;
+  status?: "merged" | "open" | "review";
 }) => (
   <tr className="border-b border-white/[0.04] last:border-0">
     <td className="py-3 pr-4 whitespace-nowrap">
@@ -78,9 +78,13 @@ const PRRow = ({
       </td>
     )}
     <td className="py-3 text-right">
-      {merged ? (
+      {status === "merged" ? (
         <span className="inline-flex items-center gap-1 text-xs text-green-400">
           <CheckCircle2 className="w-3 h-3" /> Merged
+        </span>
+      ) : status === "open" ? (
+        <span className="inline-flex items-center gap-1 text-xs text-yellow-400">
+          <Clock className="w-3 h-3" /> Open
         </span>
       ) : (
         <span className="inline-flex items-center gap-1 text-xs text-blue-400">
@@ -181,8 +185,8 @@ export default function HermetoProposal() {
               { l: "Email", v: "pawar96sameer@gmail.com", link: "mailto:pawar96sameer@gmail.com" },
               { l: "GitHub", v: "@sammy200-ui", link: "https://github.com/sammy200-ui" },
               { l: "Timezone", v: "IST (UTC+5:30)" },
-              { l: "University", v: "Newton School of Technology" },
-              { l: "Year", v: "2nd Year" },
+              { l: "University", v: "Newton School of Technology (ADYPU)" },
+              { l: "Contact", v: "+919699065624" },
             ].map((item) => (
               <div key={item.l}>
                 <span className="text-gray-600 text-xs">{item.l}</span>
@@ -223,16 +227,21 @@ export default function HermetoProposal() {
           </p>
           <p>
             I found Hermeto when the GSoC 2026 organizations were announced, and
-            I spent three weeks digging in — setting up the dev environment,
-            running the test suites, and mapping out exactly what this
-            integration requires. Before this, I spent four months actively
-            contributing to AsyncAPI.
+            I have spent the last three weeks digging in. I set up the dev
+            environment, ran the test suites, and mapped out exactly what this{" "}
+            <Code>uv</Code> integration requires. Before this, I spent four
+            months actively contributing to AsyncAPI — mostly handling
+            maintenance, bug fixes, and PR reviews. That experience taught me
+            how to jump into an established codebase, understand the existing
+            patterns, and get to work.
           </p>
           <p>
-            At its core, Konflux is about software supply chain security. The{" "}
-            <Code>uv.lock</Code> format records each dependency with its source,
-            version, and SHA256 checksum for every wheel and sdist — a perfect
-            fit for secure, deterministic builds.
+            At its core, Konflux is about software supply chain security.
+            Because the <Code>uv.lock</Code> format records each dependency with
+            its source, version, and SHA256 checksum for every wheel and sdist,
+            it is actually a perfect fit for secure, deterministic builds. Adding
+            native support for it is not just about keeping up with a new tool —
+            it directly strengthens Hermeto&apos;s main mission.
           </p>
         </motion.div>
 
@@ -245,13 +254,23 @@ export default function HermetoProposal() {
 
         <motion.div {...fade} className="text-gray-300 text-[15px] leading-relaxed space-y-4">
           {/* AI note */}
-          <div className="p-4 rounded-lg bg-accent-tertiary/[0.05] border border-accent-tertiary/10 text-sm text-gray-400">
-            <span className="text-accent-tertiary font-medium">
-              AI Transparency:
-            </span>{" "}
-            I used AI to help navigate the codebase and get up to speed. However,
-            I manually verified every technical conclusion through my own code
-            inspection and local testing.
+          <div className="p-4 rounded-lg bg-accent-tertiary/[0.05] border border-accent-tertiary/10 text-sm text-gray-400 space-y-2">
+            <p>
+              <span className="text-accent-tertiary font-medium">
+                AI Transparency:
+              </span>{" "}
+              Hermeto has a clear AI Contribution Policy, so I want to be
+              completely transparent about my workflow. I used AI to help me
+              quickly navigate the codebase, get up to speed on unfamiliar Python
+              patterns, and map out the broader uv ecosystem.
+            </p>
+            <p>
+              However, I did not just generate answers. I manually verified every
+              technical conclusion, architectural mapping, and implementation
+              step outlined below through my own code inspection and local
+              testing. I fully understand the architecture I am proposing, and I
+              am ready to explain and defend all of it.
+            </p>
           </div>
 
           <h3 className="text-lg font-semibold text-white pt-4">
@@ -259,11 +278,13 @@ export default function HermetoProposal() {
           </h3>
           <p>
             Hermeto works in two steps. First, <Code>fetch‑deps</Code> reads a
-            project&apos;s lockfile, downloads every dependency, verifies checksums,
-            and stores everything in a flat output directory alongside a
-            CycloneDX SBOM. Second, <Code>generate‑env</Code> and{" "}
+            project&apos;s lockfile, downloads every listed dependency, verifies
+            checksums, and stores everything in a flat output directory
+            (<Code>deps/&lt;pm&gt;/</Code>) alongside a CycloneDX SBOM
+            (<Code>bom.json</Code>). Second, <Code>generate‑env</Code> and{" "}
             <Code>inject‑files</Code> configure the build environment so the
-            package manager uses the local cache instead of the internet.
+            package manager uses the local cache instead of the internet. The
+            actual build then runs with zero network access.
           </p>
 
           {/* Architecture — simple vertical flow */}
@@ -324,17 +345,29 @@ export default function HermetoProposal() {
             Why uv Needs Its Own Backend
           </h3>
           <p>
-            Yes, <Code>uv</Code> is backwards‑compatible with pip. But the
-            mentors explicitly called out that this is NOT the native way.{" "}
-            <Code>uv</Code> has its own workflow based on{" "}
-            <Code>uv lock</Code> / <Code>uv sync</Code>, producing its own
-            lockfile: <Code>uv.lock</Code> — a TOML file with inline sdist/wheel
-            entries containing full download URLs and SHA256 hashes. The pip
-            backend&apos;s parser won&apos;t work for this.
+            This is something I spent time looking into beyond just the idea
+            description.
+          </p>
+          <p>
+            Yes, <Code>uv</Code> is backwards‑compatible with pip. You can run{" "}
+            <Code>uv pip install -r requirements.txt</Code> and it works. The
+            mentors explicitly called this out in the project description — that
+            is NOT the native way. <Code>uv</Code> has its own workflow based on{" "}
+            <Code>uv lock</Code> and <Code>uv sync</Code>, and it produces its
+            own lockfile: <Code>uv.lock</Code>.
+          </p>
+          <p>
+            The <Code>uv.lock</Code> format is very different from pip&apos;s{" "}
+            <Code>requirements.txt</Code>. It is a TOML file that records each
+            dependency with its name, version, source registry, and inline
+            sdist/wheel entries — each containing the full download URL and
+            SHA256 hash. It also tracks dependency markers for different
+            platforms. The pip backend&apos;s <Code>requirements.py</Code> parser
+            will not work for this — a new parser is needed.
           </p>
 
           <h3 className="text-lg font-semibold text-white pt-6">
-            Key Technical Challenges
+            What I Know About the Technical Challenges
           </h3>
 
           {/* Mentor quote */}
@@ -349,54 +382,200 @@ export default function HermetoProposal() {
             </p>
           </blockquote>
 
-          {/* Challenges — clean list */}
-          <div className="space-y-5 mt-6">
-            {[
-              {
-                t: "Parsing uv.lock",
-                d: "Valid TOML parsed via tomllib. The challenge is the schema — understanding how packages, sources, wheels, and markers are structured. Each [[package]] section has name, version, source, dependencies, and inline sdist/wheels entries with full PyPI download URLs and SHA256 hashes.",
-              },
-              {
-                t: "Download URL Resolution",
-                d: "The lockfile already contains full download URLs for each wheel and sdist — no need to query the PyPI simple API. I'd reuse Hermeto's existing http_requests.py infrastructure.",
-              },
-              {
-                t: "Security — No Arbitrary Code Execution",
-                d: "Core Hermeto rule. uv reads metadata statically without running setup.py during resolution. I need to verify this by tracing uv's source code during the research phase rather than trusting docs alone.",
-              },
-              {
-                t: "SBOM Integration",
-                d: "Map uv packages to CycloneDX components with pkg:pypi/ PURLs via sbom.py. The experimental backend needs annotations like hermeto:backend:experimental:x-uv.",
-              },
-              {
-                t: "Build Environment",
-                d: "After fetching, uv needs to use cached deps offline. Key question: can uv sync be pointed at a local cache with no network fallback? This is best figured out by local testing.",
-              },
-            ].map((c, i) => (
-              <div key={i}>
-                <h4 className="text-sm font-semibold text-white flex items-center gap-2 mb-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-accent-primary" />
-                  {c.t}
-                </h4>
-                <p className="text-sm text-gray-400 leading-relaxed pl-5.5">
-                  {c.d}
+          <p>
+            So instead of dumping everything I have learned about{" "}
+            <Code>uv.lock</Code> internals, here is what I see as the key
+            challenges and how I would approach them:
+          </p>
+
+          {/* Challenges — expanded */}
+          <div className="space-y-8 mt-6">
+            {/* 1. Parsing uv.lock */}
+            <div>
+              <h4 className="text-sm font-semibold text-white flex items-center gap-2 mb-2">
+                <ChevronRight className="w-3.5 h-3.5 text-accent-primary" />
+                1. Parsing uv.lock
+              </h4>
+              <div className="pl-5.5 space-y-3 text-sm text-gray-400 leading-relaxed">
+                <p>
+                  The <Code>uv.lock</Code> file is valid TOML, so Python&apos;s{" "}
+                  <Code>tomllib</Code> can parse it. The challenge is not the
+                  format but the schema — understanding how packages, sources,
+                  wheels, and markers are structured inside the file. Here is a
+                  simplified snippet of what a <Code>uv.lock</Code> entry looks
+                  like:
+                </p>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/proposal/Screenshot 2026-04-02 at 11.06.53 PM.png"
+                  alt="uv.lock code snippet"
+                  className="rounded-lg border border-white/[0.06] w-full max-w-xl"
+                />
+                <p>
+                  The file starts with a header: <Code>version = 1</Code>,{" "}
+                  <Code>revision = 3</Code>, and <Code>requires-python</Code>.
+                  Each <Code>[[package]]</Code> section has name, version,
+                  source, dependencies, and inline sdist and wheels entries —
+                  each wheel contains its full PyPI download URL and SHA256 hash.
+                  The parser would need to walk through these entries, build a
+                  list of what to download, and verify checksums. I also want to
+                  follow the patterns of Hermeto&apos;s existing parsers
+                  (<Code>requirements.py</Code> for pip,{" "}
+                  <Code>yarn/</Code> backend for <Code>yarn.lock</Code>).
+                </p>
+                <p>
+                  I plan to start with simple single-package projects and work up
+                  to more complex cases during the research phase.
                 </p>
               </div>
-            ))}
+            </div>
+
+            {/* 2. Download URL Resolution */}
+            <div>
+              <h4 className="text-sm font-semibold text-white flex items-center gap-2 mb-2">
+                <ChevronRight className="w-3.5 h-3.5 text-accent-primary" />
+                2. Download URL Resolution
+              </h4>
+              <div className="pl-5.5 space-y-3 text-sm text-gray-400 leading-relaxed">
+                <p>
+                  From looking at real <Code>uv.lock</Code> files, the lockfile
+                  already contains full download URLs for each wheel and sdist.
+                  This means the backend does not need to query the PyPI simple
+                  API at fetch time — it can download directly from the URLs in
+                  the lockfile. The pip backend already handles PyPI downloads
+                  through <Code>http_requests.py</Code> — I would reuse that
+                  infrastructure rather than writing something from scratch.
+                </p>
+                <p>
+                  The source registry field tells us where the package came from
+                  originally, but the actual download URLs are baked into the
+                  sdist and wheels entries. This simplifies the fetching logic
+                  compared to pip where download URLs need to be resolved
+                  separately.
+                </p>
+              </div>
+            </div>
+
+            {/* 3. Security */}
+            <div>
+              <h4 className="text-sm font-semibold text-white flex items-center gap-2 mb-2">
+                <ChevronRight className="w-3.5 h-3.5 text-accent-primary" />
+                3. Security: No Arbitrary Code Execution
+              </h4>
+              <div className="pl-5.5 space-y-3 text-sm text-gray-400 leading-relaxed">
+                <p>
+                  This is a core Hermeto rule. From what I have read,{" "}
+                  <Code>uv</Code> does not run <Code>setup.py</Code> during
+                  resolution — it reads metadata statically. That would align
+                  with Hermeto&apos;s security model. But I have not fully verified
+                  this yet and it is one of the first things I need to confirm
+                  during the research phase.
+                </p>
+                <p>
+                  This is important enough that I would want to trace through{" "}
+                  <Code>uv</Code>&apos;s actual source code during the research phase
+                  rather than just trusting what the documentation says. The
+                  mentors specifically listed &ldquo;inspecting uv&apos;s internals to
+                  verify whether there&apos;s a potential arbitrary code execution
+                  path&rdquo; as an expectation, so this cannot be hand-waved.
+                </p>
+              </div>
+            </div>
+
+            {/* 4. SBOM Integration */}
+            <div>
+              <h4 className="text-sm font-semibold text-white flex items-center gap-2 mb-2">
+                <ChevronRight className="w-3.5 h-3.5 text-accent-primary" />
+                4. SBOM Integration
+              </h4>
+              <div className="pl-5.5 space-y-3 text-sm text-gray-400 leading-relaxed">
+                <p>
+                  Each fetched package needs to become a CycloneDX component in
+                  the SBOM. The pip backend already maps Python packages to{" "}
+                  <Code>pkg:pypi/</Code> PURLs through <Code>sbom.py</Code>. The{" "}
+                  <Code>uv</Code> backend would produce the same PURL entries —
+                  the packages come from the same ecosystem (PyPI), just resolved
+                  through a different tool.
+                </p>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/proposal/Screenshot 2026-04-02 at 11.07.13 PM.png"
+                  alt="PURL output example"
+                  className="rounded-lg border border-white/[0.06] w-full max-w-xl"
+                />
+                <p>
+                  These follow the same <Code>pkg:pypi/</Code> format Hermeto
+                  already generates for pip packages (I verified this in the test
+                  suite at{" "}
+                  <Code>tests/unit/package_managers/pip/test_main.py</Code>). The
+                  tricky part is ensuring metadata accuracy for packages with
+                  non-PyPI sources — git dependencies and direct URLs need
+                  special PURL qualifiers.
+                </p>
+                <p>
+                  Also, since the <Code>uv</Code> backend would launch as
+                  experimental (<Code>x-uv</Code>), the SBOM needs to include
+                  the experimental backend annotations. From the design template,
+                  experimental backends mark their components with annotations
+                  like <Code>hermeto:backend:experimental:x-uv</Code>. This
+                  needs to be wired up from the start.
+                </p>
+              </div>
+            </div>
+
+            {/* 5. Build Environment */}
+            <div>
+              <h4 className="text-sm font-semibold text-white flex items-center gap-2 mb-2">
+                <ChevronRight className="w-3.5 h-3.5 text-accent-primary" />
+                5. Build Environment Configuration
+              </h4>
+              <div className="pl-5.5 space-y-3 text-sm text-gray-400 leading-relaxed">
+                <p>
+                  After fetching, Hermeto needs to tell <Code>uv</Code> to use
+                  the cached dependencies instead of the network. <Code>uv</Code>{" "}
+                  has environment variables for cache directory and offline mode
+                  that should work for this. I still need to dig into the exact
+                  configuration during the research phase.
+                </p>
+                <p>
+                  The key question is whether <Code>uv sync</Code> can be
+                  pointed entirely at a local cache with no network fallback. If
+                  it can, the <Code>generate-env</Code> step just needs to emit
+                  the right env vars. If not, there may be config files that need
+                  to be injected. This is one of those things that is easier to
+                  figure out by testing locally than by reading docs.
+                </p>
+                <p>
+                  <span className="text-white font-medium">A note on output directory structure:</span>{" "}
+                  Hermeto&apos;s <Code>fetch-deps</Code> typically downloads wheels
+                  and sdists into a flat output directory (e.g.{" "}
+                  <Code>deps/pip/</Code> for pip, <Code>deps/npm/</Code> for
+                  npm). <Code>uv</Code>, on the other hand, has a highly
+                  specific, complex internal cache structure
+                  (<Code>UV_CACHE_DIR</Code>). A key research deliverable is
+                  figuring out how to feed Hermeto&apos;s flat downloaded files into{" "}
+                  <Code>uv sync --offline</Code>. I will investigate whether to
+                  construct a local index (<Code>--find-links</Code> or a local
+                  file URI index) or if <Code>uv</Code> exposes a way to
+                  directly consume flat files without its internal cache layout.
+                  This is a friction point the design document will need to solve
+                  before any implementation starts.
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Edge cases */}
           <div className="mt-6 p-4 rounded-lg bg-white/[0.02] border border-white/[0.04]">
             <p className="text-sm font-medium text-white mb-2">
-              Edge Cases I&apos;m Watching For
+              6. Edge Cases I Am Watching For
             </p>
             <ul className="space-y-1.5 text-sm text-gray-400">
               {[
-                "Git dependencies — not PyPI packages, need different fetching logic",
-                "Platform-specific wheel selection across multiple platforms",
-                "Source distributions without pre-built wheels (possible build step conflict)",
-                "Workspace/monorepo support — more complex lockfile structure",
-                "uv.lock format not yet formally specified as stable API — Astral moves fast",
+                "Git dependencies in uv.lock — these are not PyPI packages and need different fetching logic",
+                "Platform-specific wheel selection — uv.lock records wheels for multiple platforms; Hermeto needs to decide which to fetch",
+                "Source distributions without pre-built wheels — these might require a build step, which conflicts with the no-arbitrary-code rule",
+                "Workspace/monorepo support — uv supports workspaces with multiple packages; the lockfile structure gets more complex",
               ].map((e, i) => (
                 <li key={i} className="flex gap-2">
                   <span className="text-accent-secondary mt-1.5 shrink-0">•</span>
@@ -405,11 +584,20 @@ export default function HermetoProposal() {
               ))}
             </ul>
             <p className="text-sm text-gray-400 mt-3">
-              I don&apos;t have answers to all of these yet — that&apos;s what the
-              research phase is for.{" "}
-              <span className="text-accent-secondary">
-                Knowing the right questions to ask is half the work.
-              </span>
+              The <Code>uv.lock</Code> format is not formally specified as a
+              stable API yet — Astral moves exceptionally fast and the format is
+              still evolving.{" "}
+              <span className="text-white font-medium">Mitigation:</span> I will
+              design the parser to explicitly check the{" "}
+              <Code>version</Code> field in the lockfile header (currently{" "}
+              <Code>version = 1</Code>). If Astral introduces a breaking
+              lockfile change, Hermeto should gracefully fail or alert the user
+              rather than silently producing incorrect results.
+            </p>
+            <p className="text-sm text-gray-400 mt-3">
+              Some details will be refined during the research and design phase.
+              I have identified the key questions and will work with mentors to
+              resolve them early.
             </p>
           </div>
         </motion.div>
@@ -423,8 +611,9 @@ export default function HermetoProposal() {
 
         <motion.div {...fade} className="text-gray-300 text-[15px] leading-relaxed space-y-4">
           <p>
-            The deliverables are clear: research, design document,
-            implementation, SBOM integration, tests, and documentation.
+            The expected deliverables from the project description are clear:
+            research, design document, implementation, SBOM integration, tests,
+            and documentation. Here is how I plan to sequence them.
           </p>
 
           <div className="space-y-3 mt-6">
@@ -432,62 +621,64 @@ export default function HermetoProposal() {
               phase="A"
               weeks="Bonding + Wk 1–2"
               title="Research & Design Document"
-              detail="Design doc via docs/design/package-manager-template.md. Submitted as PR, iterate on mentor feedback."
+              detail="Design doc via docs/design/package-manager-template.md. Submitted as PR, iterate on Erik and Alexey's feedback. Also: set up local test environments, study pip backend, inspect uv.lock for different project types."
             />
             <TimelineItem
               phase="B1"
               weeks="Wk 3–4"
               title="Lockfile Parser"
-              detail="Create hermeto/core/package_managers/uv/ module. Parse uv.lock, extract packages/versions/checksums. Unit tests."
+              detail="Create hermeto/core/package_managers/uv/ module. Write the uv.lock parser that extracts dependency names, versions, sources, and checksums. Unit tests with various lockfile shapes."
             />
             <TimelineItem
               phase="B2"
               weeks="Wk 4–5"
               title="Fetch Pipeline"
-              detail="Implement fetch_uv_source(). Download via http_requests.py, verify checksums. Register as x-uv in resolver."
+              detail="Implement fetch_uv_source(). Download via http_requests.py, checksum verification against lockfile hashes. Register as x-uv in resolver with experimental prefix."
             />
             <TimelineItem
               phase="B3"
               weeks="Wk 5–6"
               title="SBOM Integration"
-              detail="Map uv metadata to CycloneDX components. Accurate pkg:pypi/ PURLs with experimental annotations."
+              detail="Map uv metadata to CycloneDX components. Generate accurate pkg:pypi/ PURLs. Experimental backend annotations in SBOM."
             />
             <TimelineItem
               phase="B4"
               weeks="Wk 6–7"
               title="Build Environment"
-              detail="generate-env + inject-files support for offline uv usage."
+              detail="Implement generate-env support — emit the right environment variables for offline uv usage. Implement inject-files support — write any config files uv needs."
             />
             <TimelineItem
               phase="MID"
               weeks="Wk 7"
               title="Midterm: End-to-end Demo"
-              detail="Full x-uv pipeline works on standard projects — lockfile → download → verify → SBOM → offline build."
+              detail='hermeto fetch-deps &apos;{"type": "x-uv"}&apos; works end-to-end — reads lockfile, downloads, verifies checksums, generates SBOM, offline build works.'
               highlight
             />
             <TimelineItem
               phase="C1"
               weeks="Wk 8–9"
               title="Integration Tests"
-              detail="Containerized e2e tests in tests/integration/ covering happy path + edge cases."
+              detail='Containerized e2e tests in tests/integration/ with real uv projects. Alexey confirmed in #1396 these are expected and "rather straightforward" to add.'
             />
             <TimelineItem
               phase="C2"
               weeks="Wk 9–10"
               title="Documentation"
-              detail="User-facing docs: prerequisites, example usage, known limitations."
+              detail="User-facing docs page in docs/ — prerequisites, example usage, known limitations."
             />
             <TimelineItem
               phase="C3"
               weeks="Wk 10–12"
-              title="Polish & Hardening"
-              detail="Edge case hardening, possible x-uv → uv graduation."
+              title="Hardening & Stretch Goals"
+              detail="Handle edge cases surfaced during testing. Possible graduation from x-uv to uv if mentors approve. Stretch goals TBD based on progress."
             />
           </div>
 
           <p className="text-sm text-gray-500 mt-4">
-            These are goals, not unbreakable promises. I can commit 25–30 hours
-            a week for the full duration.
+            These targets may be adjusted based on design reviews or upstream{" "}
+            <Code>uv</Code> changes, and I will communicate any updates early
+            with mentors. I will be available 25–30 hours per week throughout the
+            program.
           </p>
         </motion.div>
 
@@ -499,6 +690,16 @@ export default function HermetoProposal() {
         </SectionTitle>
 
         <motion.div {...fade}>
+          <p className="text-gray-400 text-sm mb-6">
+            The Hermeto GSoC guide says one merged PR is the bar. I have that,
+            but I also want to show the four months of open source work I did
+            before Hermeto.
+          </p>
+          <p className="text-gray-500 text-xs mb-8 italic">
+            Note: I&apos;ll continue to add contributions here until GSoC
+            selection to become more familiar with the codebase.
+          </p>
+
           {/* Hermeto */}
           <div className="mb-10">
             <h3 className="text-lg font-semibold text-white mb-4">Hermeto</h3>
@@ -521,27 +722,33 @@ export default function HermetoProposal() {
                   <PRRow
                     id="#1354"
                     url="https://github.com/hermetoproject/hermeto/pull/1354"
-                    description="Replaced fragile test-exclusion logic with standard pytest -k filtering, closing issue #950"
-                    merged
+                    description="Replaced fragile automatic test-exclusion logic with standard pytest -k filtering, closing mentor-opened issue."
+                    status="merged"
                   />
                 </tbody>
               </table>
             </div>
             <p className="text-gray-500 text-sm mt-3">
-              Small change but required understanding the test infrastructure —
-              why the exclusion logic existed, why it caused problems, and why
-              removing it was safe.
+              That PR required understanding how the integration test
+              infrastructure actually worked — not just where tests live, but why
+              the exclusion logic existed in the first place and why the simpler
+              approach was safe. It was not glamorous work, but it was the kind
+              of work that makes the test suite easier to maintain going forward.
             </p>
           </div>
 
           {/* AsyncAPI */}
           <div>
-            <div className="flex items-baseline gap-3 mb-4">
+            <div className="flex items-baseline gap-3 mb-2">
               <h3 className="text-lg font-semibold text-white">AsyncAPI</h3>
               <span className="text-xs text-gray-600">
                 4 months before switching orgs
               </span>
             </div>
+            <p className="text-gray-500 text-sm mb-4">
+              I was contributing to AsyncAPI for about four months before they
+              got rejected from GSoC 2026. Mostly maintenance stuff.
+            </p>
             <div className="rounded-xl border border-white/[0.04] overflow-hidden">
               <table className="w-full text-left">
                 <thead>
@@ -561,21 +768,26 @@ export default function HermetoProposal() {
                   </tr>
                 </thead>
                 <tbody>
-                  <PRRow id="#4781" url="https://github.com/asyncapi/website/pull/4781" description="Removed deprecated scripts from the repo" category="Refactoring" merged />
-                  <PRRow id="#4997" url="https://github.com/asyncapi/website/pull/4997" description="Cleaned up unused dependencies from package.json" category="Refactoring" merged />
-                  <PRRow id="#4804" url="https://github.com/asyncapi/website/pull/4804" description="Fixed react-hooks/exhaustive-deps warnings" category="Refactoring" merged />
-                  <PRRow id="#5014" url="https://github.com/asyncapi/website/pull/5014" description="Replaced Moment.js with Day.js — ~90% bundle reduction" category="Infrastructure" merged />
-                  <PRRow id="#4710" url="https://github.com/asyncapi/website/pull/4710" description="Fixed background scrolling bug on Roadmap modal" category="Bug Fix" merged />
-                  <PRRow id="#4585" url="https://github.com/asyncapi/website/pull/4585" description="Fixed broken links in git-workflow.md" category="Bug Fix" merged />
-                  <PRRow id="#4600" url="https://github.com/asyncapi/website/pull/4600" description="Fixed broken community links in contributor docs" category="Bug Fix" merged />
-                  <PRRow id="#4988" url="https://github.com/asyncapi/website/pull/4988" description="Reviewed and tested Navbar Chevron UI fix" category="Review" merged={false} />
-                  <PRRow id="#4808" url="https://github.com/asyncapi/website/pull/4808" description="Verified Algolia search language sync logic" category="Review" merged={false} />
-                  <PRRow id="#4893" url="https://github.com/asyncapi/website/pull/4893" description="Helped a contributor understand codebase logic" category="Review" merged={false} />
+                  <PRRow id="#4781" url="https://github.com/asyncapi/website/pull/4781" description="Removed deprecated scripts from the repo" category="Refactoring" status="merged" />
+                  <PRRow id="#4997" url="https://github.com/asyncapi/website/pull/4997" description="Cleaned up unused dependencies from package.json" category="Refactoring" status="open" />
+                  <PRRow id="#4804" url="https://github.com/asyncapi/website/pull/4804" description="Fixed react-hooks/exhaustive-deps warnings across the codebase" category="Refactoring" status="open" />
+                  <PRRow id="#5014" url="https://github.com/asyncapi/website/pull/5014" description="Replaced Moment.js with Day.js — ~90% bundle reduction" category="Infrastructure" status="merged" />
+                  <PRRow id="#4710" url="https://github.com/asyncapi/website/pull/4710" description="Fixed background scrolling bug on Roadmap modal" category="Bug Fix" status="merged" />
+                  <PRRow id="#4585" url="https://github.com/asyncapi/website/pull/4585" description="Fixed broken links in git-workflow.md" category="Bug Fix" status="merged" />
+                  <PRRow id="#4600" url="https://github.com/asyncapi/website/pull/4600" description="Fixed broken community links in contributor docs" category="Bug Fix" status="merged" />
+                  <PRRow id="#4988" url="https://github.com/asyncapi/website/pull/4988" description="Reviewed and tested Navbar Chevron UI fix" category="Review" status="review" />
+                  <PRRow id="#4808" url="https://github.com/asyncapi/website/pull/4808" description="Verified Algolia search language sync logic" category="Review" status="review" />
+                  <PRRow id="#4893" url="https://github.com/asyncapi/website/pull/4893" description="Helped a contributor understand codebase logic" category="Review" status="review" />
                 </tbody>
               </table>
             </div>
             <p className="text-gray-500 text-sm mt-3 italic">
               None of this was glamorous — and that was kind of the point.
+            </p>
+            {/* Add Open status indicator */}
+            <p className="text-gray-600 text-xs mt-2">
+              Some PRs are still open — AsyncAPI was rejected from GSoC 2026, so
+              I switched orgs before they all got merged.
             </p>
           </div>
         </motion.div>
@@ -592,10 +804,13 @@ export default function HermetoProposal() {
             to it. This backend closes that gap.
           </p>
           <p>
-            A clean <Code>uv</Code> backend also gives future contributors a
-            better reference if they need to add support for Poetry, PDM, or
+            There is also a secondary benefit. The pip backend is older and more
+            complex. A clean <Code>uv</Code> backend gives future contributors a
+            better reference if they ever need to add support for Poetry, PDM, or
             whatever comes next. And the design document itself is useful even if
-            the code takes longer than expected.
+            the code takes longer than expected — right now there is no
+            written-down analysis of how <Code>uv</Code> should integrate with
+            Hermeto.
           </p>
         </motion.div>
 
@@ -605,22 +820,25 @@ export default function HermetoProposal() {
         <SectionTitle id="about-me">About Me</SectionTitle>
         <motion.div {...fade} className="text-gray-300 text-[15px] leading-relaxed space-y-4">
           <p>
-            I&apos;m a 2nd year student at Newton School of Technology. Most of my
-            experience is in JavaScript and TypeScript — React, Next.js, Node.js.
-            Python is more recent but I&apos;ve been spending a lot of time in it,
-            and Hermeto&apos;s codebase is a good fit.
+            I am a 2nd year student at Newton School of Technology (ADYPU). I
+            have experience in Python, TypeScript (React, Next.js, Node.js), and
+            I am comfortable working across both ecosystems. Hermeto&apos;s
+            codebase aligns well with my experience, and I can easily follow its
+            patterns.
           </p>
           <p>
             I&apos;m also part of my college&apos;s Student Developer Club where I help
-            organize meets, hackathons, and work on projects with others.
+            organize meets, hackathons, and work on projects with others. A lot
+            of it is coordination — less about code and more about making sure
+            things actually get done.
           </p>
 
+          <p className="text-gray-400 text-sm mt-2">A few projects I built outside of open source:</p>
           {/* Projects — simple inline links */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
             {[
-              { name: "SiliconSage", desc: "AI PC builder — Next.js + FastAPI + ML", url: "https://github.com/sammy200-ui/SiliconSage" },
-              { name: "Let's Collab", desc: "Real-time whiteboard — React + Socket.IO", url: "https://github.com/IronwallxR5/Let-s_Collab" },
-              { name: "NotesApp", desc: "AI note-taking — MERN + Groq", url: "https://github.com/sammy200-ui/NotesApp" },
+              { name: "SiliconSage", desc: "PC building assistant. Next.js + TypeScript frontend, FastAPI + Scikit-Learn backend for ML predictions.", url: "https://github.com/sammy200-ui/SiliconSage" },
+              { name: "SpecterScan", desc: "AI-powered legal contract analyzer for flagging document risks. React, TypeScript, FastAPI, Python, Scikit-Learn.", url: "https://github.com/sammy200-ui/SpecterScan" },
             ].map((p) => (
               <a
                 key={p.name}
@@ -641,18 +859,19 @@ export default function HermetoProposal() {
         <Divider />
 
         {/* ── Availability ──────────────────────────────────── */}
-        <SectionTitle id="availability">Availability</SectionTitle>
+        <SectionTitle id="availability">Availability & Commitments</SectionTitle>
         <motion.div {...fade} className="text-gray-300 text-[15px] leading-relaxed space-y-4">
           <p>
-            My college has an internship period from June to December. If
+            My college has an internship period from June to December. If I get
             selected for GSoC, that becomes my internship — no classes, no exams,
-            no conflicts.
+            no conflicts for the entire coding period.
           </p>
           <p>
-            I can commit{" "}
+            I can put in{" "}
             <span className="text-white font-medium">25–30 hours a week</span>.
-            Timezone is IST (UTC+5:30). Happy to do async or sync communication,
-            whatever works better for the mentors.
+            Timezone is IST (UTC+5:30). I usually work during the day but I am
+            flexible. Happy to do async (GitHub, email) or sync calls with Erik
+            and Alexey, whatever works better for them.
           </p>
         </motion.div>
 
@@ -662,23 +881,27 @@ export default function HermetoProposal() {
         <SectionTitle id="post-gsoc">Post GSoC</SectionTitle>
         <motion.div {...fade} className="text-gray-300 text-[15px] leading-relaxed space-y-4 mb-8">
           <p>
-            I want to stay on after GSoC ends. The <Code>x-uv</Code> backend
-            will need maintenance — Astral moves fast and{" "}
-            <Code>uv.lock</Code> will keep evolving. Someone who understands the
-            parser and edge cases is better placed to handle that.
+            Honestly, the <Code>x-uv</Code> backend shipping is not the end of
+            the work — it&apos;s the beginning of it. Astral moves fast,{" "}
+            <Code>uv.lock</Code> will keep changing, and whoever maintains the
+            parser needs to already understand why certain edge cases were
+            handled the way they were. I will have that context. It would be
+            wasteful to just walk away.
           </p>
           <p>
-            There&apos;s also the graduation path from <Code>x-uv</Code> to stable{" "}
-            <Code>uv</Code>. I want to be around for that.
+            The graduation path from <Code>x-uv</Code> to a stable{" "}
+            <Code>uv</Code> backend is also something I want to see through
+            personally. Shipping it experimental and then handing it off to
+            someone else to graduate feels like leaving halfway.
           </p>
           <p>
-            Hermeto is the kind of project I&apos;d keep contributing to — it&apos;s
-            Python, well-organized, the mentors are responsive, and the problem
-            it solves —{" "}
+            And beyond just the <Code>uv</Code> work, I have spent enough time
+            in the Hermeto codebase now to care about it. The problem it
+            solves is real, the mentors actually engage with contributors, and
+            there is still meaningful work to do here after GSoC.{" "}
             <span className="text-accent-tertiary">
-              reproducible hermetic builds
-            </span>{" "}
-            — is genuinely important infrastructure work.
+              That&apos;s rare enough that I&apos;m not going to take it for granted.
+            </span>
           </p>
         </motion.div>
       </div>
