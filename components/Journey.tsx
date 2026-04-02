@@ -42,7 +42,7 @@ const journeyData: JourneyItem[] = [
         year: "2021 - 2022",
         title: "Matriculation (Class X)",
         subtitle: "Rajiv Gandhi International School",
-        description: "Completed secondary education with a strong foundation in academics. Achieved a grade of 73.33%.",
+        description: "Completed secondary education with a strong foundation in academics.",
         icon: School,
     },
 ];

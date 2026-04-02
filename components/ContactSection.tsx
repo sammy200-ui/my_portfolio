@@ -133,7 +133,7 @@ export default function ContactSection() {
         </div>
 
         {/* Social Links - Simplified */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -159,7 +159,7 @@ export default function ContactSection() {
               );
             })}
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

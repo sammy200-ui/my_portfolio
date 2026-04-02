@@ -3,15 +3,16 @@
 import { useMotionValue, motion, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { Home, User, Briefcase, Map, Mail, Monitor } from "lucide-react";
+import { Home, User, Briefcase, Map, Mail, Monitor, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
-    { id: "home", icon: Home, label: "Home", href: "#home" },
-    { id: "skills", icon: Monitor, label: "Skills", href: "#skills" },
-    { id: "projects", icon: Briefcase, label: "Projects", href: "#projects" },
-    { id: "journey", icon: Map, label: "Journey", href: "#journey" },
-    { id: "contact", icon: Mail, label: "Contact", href: "#contact" },
+    { id: "home", icon: Home, label: "Home", href: "/" },
+    { id: "skills", icon: Monitor, label: "Skills", href: "/#skills" },
+    { id: "projects", icon: Briefcase, label: "Projects", href: "/#projects" },
+    { id: "experience", icon: Globe, label: "Experience", href: "/experience" },
+    { id: "journey", icon: Map, label: "Journey", href: "/#journey" },
+    { id: "contact", icon: Mail, label: "Contact", href: "/#contact" },
 ];
 
 export default function Dock() {

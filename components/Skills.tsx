@@ -22,7 +22,7 @@ const skills = [
   { name: "React", icon: SiReact, category: "Frontend" },
   { name: "Next.js", icon: SiNextdotjs, category: "Frontend" },
   { name: "React Native", icon: SiReact, category: "Frontend" },
-  { name: "Three.js", icon: SiThreedotjs, category: "Frontend" },
+ 
 
   
   { name: "Node.js", icon: SiNodedotjs, category: "Backend" },
@@ -38,7 +38,7 @@ const skills = [
   { name: "MySQL", icon: SiMysql, category: "Data" },
   { name: "NoSQL", icon: FaDatabase, category: "Data" },
   { name: "Pandas", icon: SiPandas, category: "Data" },
-  { name: "Hugging Face", icon: SiHuggingface, category: "Data" },
+  
   { name: "Data Structures", icon: FaBrain, category: "Data" },
 ];
 
